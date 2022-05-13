@@ -75,7 +75,8 @@ script <- make_script(
 script <- new_scene(script)
 exec_script <- action(
   script,
-  exec = FALSE
+  exec = FALSE,
+  write = TRUE
 )
 
 ## -----------------------------------------------------------------------------

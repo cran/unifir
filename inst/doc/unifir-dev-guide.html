@@ -166,7 +166,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">unity =</span> <span class="fu">waiver</span>() <span class="co"># Don&#39;t error if we can&#39;t find Unity</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>script</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: 0x55dceff40f00&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: 0x5654e34489c8&gt;</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;unifir_script&quot;</span></span></code></pre></div>
 <p>This creates an <a href="https://github.com/r-lib/R6">R6</a> object of the class <code>unifir_script</code>. If you haven’t worked with R6 before, I recommend checking out <a href="https://adv-r.hadley.nz/r6.html">the section of Advanced R on the subject</a>. At the end of the day, however, a script is effectively just a glorified list. We can check out its contents using <code>names()</code>:</p>
@@ -208,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     method_name: ExampleName</span></span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     method_type: ExampleMethod</span></span>
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     parameters: list</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     prop_file: /tmp/RtmpYzByro/file55cea438ce24c</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     prop_file: /tmp/Rtmp4A7i06/file7677c5c4197e1</span></span>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     using: ExampleDependencies</span></span></code></pre></div>
 <p>Just as before, we can see our prop’s contents using <code>names()</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(prop)</span>
@@ -222,27 +222,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (script, setup = c(&quot;EmptyScene&quot;, &quot;DefaultGameObjects&quot;), </span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     mode = c(&quot;Additive&quot;, &quot;Single&quot;), method_name = NULL, exec = TRUE) </span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     setup &lt;- setup[[1]]</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     mode &lt;- mode[[1]]</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     if (!(mode %in% c(&quot;Additive&quot;, &quot;Single&quot;))) {</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         stop(&quot;mode must be one of Additive or Single&quot;)</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     }</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     if (!(setup %in% c(&quot;EmptyScene&quot;, &quot;DefaultGameObjects&quot;))) {</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         stop(&quot;setup must be one of EmptyScene or DefaultGameObjects&quot;)</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     }</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     prop &lt;- unifir_prop(prop_file = system.file(&quot;NewScene.cs&quot;, </span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         package = &quot;unifir&quot;), method_name = method_name, method_type = &quot;NewScene&quot;, </span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         parameters = list(setup = setup, mode = mode), build = function(script, </span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             prop, debug) {</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             glue::glue(readChar(prop$prop_file, file.info(prop$prop_file)$size), </span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                 .open = &quot;%&quot;, .close = &quot;%&quot;, method_name = prop$method_name, </span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                 setup = setup, mode = mode)</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         }, using = c(&quot;UnityEngine.SceneManagement&quot;, &quot;UnityEditor&quot;, </span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             &quot;UnityEditor.SceneManagement&quot;))</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     add_prop(script, prop, exec)</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x55dcf0829548&gt;</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:unifir&gt;</span></span></code></pre></div>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     setup &lt;- match.arg(setup)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     mode &lt;- match.arg(mode)</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     prop &lt;- unifir_prop(prop_file = system.file(&quot;NewScene.cs&quot;, </span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         package = &quot;unifir&quot;), method_name = method_name, method_type = &quot;NewScene&quot;, </span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         parameters = list(setup = setup, mode = mode), build = function(script, </span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             prop, debug) {</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             glue::glue(readChar(prop$prop_file, file.info(prop$prop_file)$size), </span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                 .open = &quot;%&quot;, .close = &quot;%&quot;, method_name = prop$method_name, </span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                 setup = setup, mode = mode)</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         }, using = c(&quot;UnityEngine.SceneManagement&quot;, &quot;UnityEditor&quot;, </span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             &quot;UnityEditor.SceneManagement&quot;))</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     add_prop(script, prop, exec)</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x5654e3d30640&gt;</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:unifir&gt;</span></span></code></pre></div>
 <p>This prop takes two parameters – <code>setup</code> and <code>mode</code> – and the top of the script makes sure they exist and are passed correctly. We then get to the internal <code>unifir_prop()</code> call. This call passes <code>system.file(&quot;NewScene.cs&quot;, package = &quot;unifir&quot;)</code> to the <code>prop_file</code> argument; if we print that file out we can see that it’s a relatively simple C# method:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">readLines</span>(<span class="fu">system.file</span>(<span class="st">&quot;NewScene.cs&quot;</span>, <span class="at">package =</span> <span class="st">&quot;unifir&quot;</span>))</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;&quot;                                                                                               </span></span>
@@ -257,7 +251,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>script <span class="ot">&lt;-</span> <span class="fu">new_scene</span>(script)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>script<span class="sc">$</span>props[[<span class="dv">1</span>]]<span class="sc">$</span><span class="fu">build</span>(script, script<span class="sc">$</span>props[[<span class="dv">1</span>]])</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; static void CircleChooseCoursemay() {</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; static void NorSpokeHotFriend() {</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     var newScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);</span></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span></code></pre></div>
 <p>The last part of our prop constructor is the <code>add_prop</code> function, which registers the prop as part of our script. Its code is incredibly simple, and mostly deals with creating the <code>script$beats</code> table:</p>
@@ -275,12 +269,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     script$using &lt;- c(script$using, prop$using)</span></span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     script</span></span>
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x55dceebece38&gt;</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x5654e20f8258&gt;</span></span>
 <span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:unifir&gt;</span></span></code></pre></div>
 <p>That table is relatively simple, storing four variables: <code>idx</code>, the order that methods will be executed in, <code>name</code>, the <code>method_name</code> of each method, <code>type</code>, the <code>method_type</code> of each method, and <code>exec</code>, a boolean representing whether or not that method should be called in the final C# script:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>script<span class="sc">$</span>beats</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    idx                  name     type exec</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; NA   1 CircleChooseCoursemay NewScene TRUE</span></span></code></pre></div>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    idx              name     type exec</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; NA   1 NorSpokeHotFriend NewScene TRUE</span></span></code></pre></div>
 </div>
 <div id="action" class="section level2">
 <h2>Action</h2>
@@ -308,11 +302,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>script <span class="ot">&lt;-</span> <span class="fu">new_scene</span>(script)</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>exec_script <span class="ot">&lt;-</span> <span class="fu">action</span>(</span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  script,</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">exec =</span> <span class="cn">FALSE</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">exec =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">write =</span> <span class="cn">TRUE</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>If we’re concerned about how unifir translated our prop code, we can find the rendered C# inside <code>props</code>:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>exec_script<span class="sc">$</span>props</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;static void CatchHeartExperimentSix() {\n    var newScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);\n}\n&quot;</span></span></code></pre></div>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;static void SpeakDescribeLetterSnow() {\n    var newScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);\n}\n&quot;</span></span></code></pre></div>
 <p>To see the entire produced C# script, we need to read the actual script file itself:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">readLines</span>(</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;unifir&quot;</span>, <span class="st">&quot;Assets&quot;</span>, <span class="st">&quot;Editor&quot;</span>, <span class="st">&quot;example_script.cs&quot;</span>)</span>
@@ -322,12 +317,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [3] &quot;using UnityEditor.SceneManagement; &quot;                                                             </span></span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [4] &quot;&quot;                                                                                                </span></span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;public class example_script {&quot;                                                                   </span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [6] &quot;static void CatchHeartExperimentSix() {&quot;                                                         </span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [6] &quot;static void SpeakDescribeLetterSnow() {&quot;                                                         </span></span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;    var newScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);&quot;</span></span>
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [8] &quot;}&quot;                                                                                               </span></span>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;&quot;                                                                                                </span></span>
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [10] &quot;    static void MainFunc() {&quot;                                                                    </span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [11] &quot;        CatchHeartExperimentSix();&quot;                                                              </span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [11] &quot;        SpeakDescribeLetterSnow();&quot;                                                              </span></span>
 <span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [12] &quot;    }&quot;                                                                                           </span></span>
 <span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] &quot;}&quot;</span></span></code></pre></div>
 <p>Notice how this code matches our prop, with two additions: first, all the namespaces we provided to <code>using</code> are now imported at the top of the script, and second a function <code>MainFunc</code> has been created to call our prop. When executing the C# script, unifir will execute this <code>MainFunc</code> method, which will in turn call each prop once in the order it’s listed in <code>script$beats</code>.</p>
