@@ -1,3 +1,15 @@
+# unifir 0.2.3
+
+* Bug fixes:
+    * Fixed bug where spaces in path to Unity would cause `unity_version()` and 
+      `create_project()` to fail.
+    * Fixed `InstantiatePrefab` C# requirements to now include `UnityEditor`.
+    * Fixed test for new sf and terra versions.
+    * `associate_coordinates()` will now only reproject if both objects have
+      coordinate reference systems.
+* Documentation changes:
+    * Added citation information.
+
 # unifir 0.2.2
 
 * Redocumented to keep the package on CRAN.
