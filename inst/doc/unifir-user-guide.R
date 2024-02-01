@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -71,7 +71,7 @@ knitr::opts_chunk$set(
 #    heightmap_resolution = terrain_size
 #  )
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  num_trees <- 100
 #  pos <- data.frame(
 #    x = runif(num_trees, -40, 40),

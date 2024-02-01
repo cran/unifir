@@ -119,13 +119,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -362,17 +369,17 @@ function takes two main arguments: the script to add the prop to and the
 path to the asset to copy (either a single file or a directory, to copy
 recursively). For instance, let’s say we want to import all of the files
 stored at <code>example_asset</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>example_asset <span class="ot">&lt;-</span> <span class="fu">tempfile</span>()</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">file.create</span>(example_asset)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>example_asset <span class="ot">&lt;-</span> <span class="fu">tempfile</span>()</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">file.create</span>(example_asset)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>We can import that using <code>import_asset()</code> as follows:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(unifir)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>script <span class="ot">&lt;-</span> <span class="fu">make_script</span>(</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">project =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;unifir&quot;</span>),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">unity =</span> <span class="fu">waiver</span>() <span class="co"># Makes it so make_script won&#39;t error if it can&#39;t find Unity</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>script <span class="ot">&lt;-</span> <span class="fu">import_asset</span>(script, example_asset)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(unifir)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>script <span class="ot">&lt;-</span> <span class="fu">make_script</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">project =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;unifir&quot;</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="at">unity =</span> <span class="fu">waiver</span>() <span class="co"># Makes it so make_script won&#39;t error if it can&#39;t find Unity</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>script <span class="ot">&lt;-</span> <span class="fu">import_asset</span>(script, example_asset)</span></code></pre></div>
 <p>(For more information on <code>waiver()</code>, check out unifir
 102).</p>
 <p>Now when we run <code>action()</code> on this script, we’ll copy
@@ -410,9 +417,9 @@ directory, <em>not</em> your current working directory. Since we used
 <code>import_asset()</code> to import our “asset” earlier, that means
 our asset is inside the “Assets” directory inside our Unity project, and
 we can instantiate it as follows:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>script <span class="ot">&lt;-</span> <span class="fu">instantiate_prefab</span>(script,</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">prefab_path =</span> <span class="fu">file.path</span>(<span class="st">&quot;Assets&quot;</span>, </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                                                     <span class="fu">basename</span>(example_asset)))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>script <span class="ot">&lt;-</span> <span class="fu">instantiate_prefab</span>(script,</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>                             <span class="at">prefab_path =</span> <span class="fu">file.path</span>(<span class="st">&quot;Assets&quot;</span>, </span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>                                                     <span class="fu">basename</span>(example_asset)))</span></code></pre></div>
 <p>If you used <code>import_asset()</code> to import a directory, the
 file structure of your directory will be preserved. That means that, if
 <code>example_asset</code> were a directory containing a prefab at
@@ -447,10 +454,10 @@ CC-0 1.0 – making them free to use in any of your projects.</p>
 on CRAN – take the same arguments as <code>instantiate_prefab</code> to
 let you specify position, scale, and rotation of your objects, but
 handle all the file path trickiness for you:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  script <span class="ot">&lt;-</span> <span class="fu">add_default_player</span>(script)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  script <span class="ot">&lt;-</span> <span class="fu">add_default_tree</span>(script, <span class="st">&quot;tree_1&quot;</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  script <span class="ot">&lt;-</span> <span class="fu">add_default_player</span>(script)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  script <span class="ot">&lt;-</span> <span class="fu">add_default_tree</span>(script, <span class="st">&quot;tree_1&quot;</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>}</span></code></pre></div>
 <p>If you have any (permissively-licensed – no GPL or CC-BY) assets
 you’d like to share as part of this set, <a href="https://github.com/mikemahoney218/unity_assets/issues">open an
 issue on GitHub!</a></p>
